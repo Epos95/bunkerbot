@@ -21,6 +21,8 @@ def grab(msg, *args, **kwargs):
         # grab the last message that wasnt sent by the bot
         pass
                 
+def random(msg, *args, **kwargs):
+    pass
 
 def get(msg, *args, **kwargs):
     # this should check if the content of the message contains any name to check 
@@ -30,7 +32,8 @@ def get(msg, *args, **kwargs):
 d = {
     "!grab" : grab,
     "!get"  : get,
-    }
+    "!random" : random,
+}
 
 @bot.event
 async def on_ready():
