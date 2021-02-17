@@ -7,6 +7,10 @@ bot = discord.Client()
 # best structure? fuck if i know just yeet it into a json file 
 # adopt the json structure from the LTU discord bot to keep the json updated
 
+def add_quote(msg):
+    # this function should add things to the json
+    pass
+
 # maybe add undo feature
 async def grab(msg, *args, **kwargs):
     if len(msg.mentions) == 1:
@@ -17,7 +21,12 @@ async def grab(msg, *args, **kwargs):
     else:
         # grab the last message that wasnt sent by the bot
         print("grab the last message")
-        pass
+
+        # this limit is flexible
+        async for message in msg.channel.history(limit=20):
+            if message.author != bot.user and message.author != msg.author:
+                add_quote(message)
+                return
                 
 async def random(msg, *args, **kwargs):
     pass
@@ -27,6 +36,7 @@ async def get(msg, *args, **kwargs):
     pass
 
 
+# this is damn therapeutic man
 methods = {
     "!grab" : grab,
     "!get"  : get,
@@ -36,7 +46,7 @@ methods = {
 @bot.event
 async def on_ready():
     print("Bot ready")
-    print(f"logged in as {bot.name}")
+    print(f"logged in as {bot.user.name}")
 
 @bot.event
 async def on_message(msg):
