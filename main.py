@@ -54,5 +54,6 @@ async def on_message(msg):
         await d[command[0]](msg)
 
 
+
 if "__main__" == __name__:
     bot.run(token)
