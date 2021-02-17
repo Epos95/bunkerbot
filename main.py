@@ -7,7 +7,7 @@ bot = discord.Client()
 # best structure? fuck if i know just yeet it into a json file 
 # adopt the json structure from the LTU discord bot to keep the json updated
 
-def grab(msg, *args, **kwargs):
+async def grab(msg, *args, **kwargs):
     # if a name is specified in content:
     #   get the last message of that user and add it 
     # else
@@ -21,10 +21,10 @@ def grab(msg, *args, **kwargs):
         # grab the last message that wasnt sent by the bot
         pass
                 
-def random(msg, *args, **kwargs):
+async def random(msg, *args, **kwargs):
     pass
 
-def get(msg, *args, **kwargs):
+async def get(msg, *args, **kwargs):
     # this should check if the content of the message contains any name to check 
     pass
 
@@ -50,7 +50,8 @@ async def on_message(msg):
         return
 
     # lmao imagine using try/catch
-    d[command](msg)
+    if command[0] in d:
+        await d[command[0]](msg)
 
 
 if "__main__" == __name__:
