@@ -29,7 +29,7 @@ async def get(msg, *args, **kwargs):
     pass
 
 
-d = {
+methods = {
     "!grab" : grab,
     "!get"  : get,
     "!random" : random,
@@ -42,7 +42,7 @@ async def on_ready():
 @bot.event
 async def on_message(msg):
     print("got a message lul")
-    command = msg.content.split(" ")
+    command = msg.content.split(" ")[0]
 
     # remove this error check later
     if not command:
@@ -50,8 +50,8 @@ async def on_message(msg):
         return
 
     # lmao imagine using try/catch
-    if command[0] in d:
-        await d[command[0]](msg)
+    if command in methods:
+        await methods[command](msg)
 
 
 
