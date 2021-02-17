@@ -15,13 +15,18 @@ async def m():
 
     print()
 
-
     d2 = DummyMessage("!get")
     print(f"Testing get with string \"{d2.content}\"")
     await main.get(d2)
 
+    print()
+
     d3 = DummyMessage("!test")
     print(f"Testing on_message with string \"{d3.content}\"")
     await main.on_message(d3)
+
+    d4 = DummyMessage("!grab")
+    print(f"Testing on_message with string \"{d4.content}\"")
+    await main.on_message(d4)
 
 asyncio.run(m())
