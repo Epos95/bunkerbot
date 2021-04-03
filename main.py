@@ -21,7 +21,7 @@ def add_quote(msg: discord.Message, grabber: str, time: datetime) -> None:
             "datetime" : time,
             "quote" : msg.content
         }
-
+        
         json.dump(d, f)
 
 # maybe add undo feature
@@ -59,7 +59,7 @@ methods = {
 
 @bot.event
 async def on_ready() -> None:
-
+    print("Bot ready")
     print(f"logged in as {bot.user.name}")
 
 @bot.event
