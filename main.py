@@ -14,16 +14,20 @@ bot = discord.Client()
 
 def add_quote(msg: discord.Message, grabber: str, time: datetime) -> None:
     # this function should add things to the json
-    with open("file.json", "r+") as f:
+
+    with open("file.json", "r") as f:
         d = json.load(f)
 
+    with open("file.json", "w") as f:
+        print(d)
         d["quotes"][len(d["quotes"])+1] = {
             "user" : msg.author.name,
             "grabber" : grabber,
-            "datetime" : time,
+            "datetime" : str(time),
             "quote" : msg.content
         }
-        
+
+        print(d)
         json.dump(d, f)
 
 # maybe add undo feature
@@ -33,11 +37,11 @@ async def grab(msg: discord.Message, *args, **kwargs) -> None:
 
         async for message in msg.channel.history(limit=200): 
             if message.author == user:
-                add_quote(message, msg.author, msg.created_at)
+                add_quote(message, msg.author.name, msg.created_at)
 
     else:
         # this limit is flexible
-        async for message in msg.channel.history(limit=20):
+        async for message in msg.channel.history(limit=200):
             if message.author != bot.user and message.author != msg.author:
                 add_quote(message, msg.author.name, msg.created_at)
                 return
@@ -45,11 +49,12 @@ async def grab(msg: discord.Message, *args, **kwargs) -> None:
 async def random(msg: discord.Message, *args, **kwargs) -> None:
     # get a random quote from the json
     with open("file.json", "r+") as f:
+
         d = json.load(f)
-        id = str(randint(0,len(d["quotes"])))
+        id = str(randint(1,len(d["quotes"])))
         quote = d["quotes"][id]
 
-        await msg.channel.send(f"*{quote['user']}* said ```{quote['grabber']}``` and was grabbed at {quote['time']}. This wonderful qoute grabbed by *{quote['grabber']}*")
+        await msg.channel.send(f"{quote['user']} said ```{quote['quote']}``` at {quote['datetime']}. Grabbed by {quote['grabber']}")
 
 
 async def get(msg: discord.Message, *args, **kwargs) -> List[discord.Message]:
