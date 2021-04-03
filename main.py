@@ -1,10 +1,10 @@
 import discord
 import json
 from random import randint
+from typing import List
 
 import datetime
 
-token = ""
 with open("token.txt", "r") as f:
     token = f.read()
 
@@ -48,7 +48,7 @@ async def random(msg: discord.Message, *args, **kwargs) -> None:
         await msg.channel.send(f"*{quote['user']}* said ```{quote['grabber']}``` and was grabbed at {quote['time']}. This wonderful qoute grabbed by *{quote['grabber']}*")
 
 
-async def get(msg: discord.Message, *args, **kwargs) -> list[discord.Message]:
+async def get(msg: discord.Message, *args, **kwargs) -> List[discord.Message]:
     # this should check if the content of the message contains any name to check 
     pass
 
