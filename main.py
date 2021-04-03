@@ -43,6 +43,7 @@ async def grab(msg: discord.Message, *args, **kwargs) -> None:
         # this limit is flexible
         async for message in msg.channel.history(limit=200):
             if message.author != bot.user and message.author != msg.author:
+                # Rewrite this to use the nicknames of users instead
                 add_quote(message, msg.author.name, msg.created_at)
                 return
                 
