@@ -4,7 +4,9 @@ from random import randint
 
 import datetime
 
-token = "read from file lol"
+token = ""
+with open("token.txt", "r") as f:
+    token = f.read()
 
 bot = discord.Client()
 # best structure? fuck if i know just yeet it into a json file 
@@ -40,17 +42,16 @@ async def random(msg: discord.Message, *args, **kwargs) -> None:
     # get a random quote from the json
     with open("file.json", "r+") as f:
         d = json.load(f)
-        quote = d["quotes"][str(randint(0, len(d["quotes"])))]
+        id = str(randint(0,len(d["quotes"])))
+        quote = d["quotes"][id]
 
-        await msg.channel.send(f"*{quote['user']}* said ```{quote['grabber']}``` and was grabbed at {quote['time']}. This wonderful grab brought to you by *{quote['grabber']}*")
+        await msg.channel.send(f"*{quote['user']}* said ```{quote['grabber']}``` and was grabbed at {quote['time']}. This wonderful qoute grabbed by *{quote['grabber']}*")
 
 
 async def get(msg: discord.Message, *args, **kwargs) -> list[discord.Message]:
     # this should check if the content of the message contains any name to check 
     pass
 
-
-# this is damn therapeutic man
 methods = {
     "!grab" : grab,
     "!get"  : get,
@@ -64,17 +65,18 @@ async def on_ready() -> None:
 
 @bot.event
 async def on_message(msg: discord.Message) -> None:
-    print("got a message lul")
     command = msg.content.split(" ")[0]
 
-    # remove this error check later
     if not command:
-        print("What kinda message would even trigger this?")
+        # a trailing space before text makes this happen but discord should make it safe
+        # test before removing
         return
 
     # lmao imagine using try/catch
-    if command in methods:
+    try: 
         await methods[command](msg)
+    except:
+        pass
 
 if "__main__" == __name__:
     bot.run(token)
