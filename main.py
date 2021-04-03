@@ -30,7 +30,11 @@ def add_quote(msg: discord.Message, grabber: str, time: datetime) -> None:
 async def grab(msg: discord.Message, *args, **kwargs) -> None:
     if len(msg.mentions) == 1:
         user = msg.mentions[0]
-        # iterate over the message list from the server and find the latest one by userid
+
+        async for message in msg.channel.history(limit=200): 
+            if message.author == user:
+                add_quote(message, msg.author, msg.created_at)
+
     else:
         # this limit is flexible
         async for message in msg.channel.history(limit=20):
