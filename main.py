@@ -1,5 +1,7 @@
 import discord
+from discord.ext import tasks
 import json
+
 from random import randint
 from typing import List
 
@@ -33,11 +35,14 @@ def add_quote(msg: discord.Message, grabber: str, time: datetime) -> None:
 # maybe add undo feature
 async def grab(msg: discord.Message, *args, **kwargs) -> None:
     if len(msg.mentions) == 1:
+        # this does not work
+
         user = msg.mentions[0]
 
         async for message in msg.channel.history(limit=200): 
             if message.author == user:
                 add_quote(message, msg.author.name, msg.created_at)
+                return
 
     else:
         # this limit is flexible
@@ -62,6 +67,22 @@ async def get(msg: discord.Message, *args, **kwargs) -> List[discord.Message]:
     # this should check if the content of the message contains any name to check 
     pass
 
+@tasks.loop(minutes=2)
+async def times():
+    # check if its midnight on a friday, caturday or sunday
+    # (night to saturday, night to sunday and night to monday)
+
+    # print midnight cat
+
+    # get channel by channelid 
+
+    # get cat gif
+
+    # send message to channel
+
+    pass
+
+
 methods = {
     "!grab" : grab,
     "!get"  : get,
@@ -72,6 +93,8 @@ methods = {
 async def on_ready() -> None:
     print("Bot ready")
     print(f"logged in as {bot.user.name}")
+    times.start()
+    
 
 @bot.event
 async def on_message(msg: discord.Message) -> None:
