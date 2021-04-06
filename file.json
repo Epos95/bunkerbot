@@ -1,10 +1,1 @@
-{
-    "quotes" : {
-        "1" : {
-            "user" : "",
-            "grabber" : "",
-            "datetime" : "",
-            "quote" : ""
-        }
-    }
-}
+{"quotes": {"1": {"user": "systemfehler", "grabber": "Epos95", "datetime": "2021-04-06 23:53:02.753000", "quote": "what worked?"}, "2": {"user": "ANX", "grabber": "systemfehler", "datetime": "2021-04-06 23:54:37.089000", "quote": "i think we had two commands back then, the quote one only quoted and another one gave all the info (grabber and timestamp)"}, "3": {"user": "systemfehler", "grabber": "Epos95", "datetime": "2021-04-06 23:56:45.181000", "quote": "good work"}}}

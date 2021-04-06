@@ -14,14 +14,13 @@ bot = discord.Client()
 # best structure? fuck if i know just yeet it into a json file 
 # adopt the json structure from the LTU discord bot to keep the json updated
 
-def add_quote(msg: discord.Message, grabber: str, time: datetime) -> None:
+async def add_quote(msg: discord.Message, grabber: str, time: datetime) -> None:
     # this function should add things to the json
 
     with open("file.json", "r") as f:
         d = json.load(f)
 
     with open("file.json", "w") as f:
-        print(d)
         d["quotes"][len(d["quotes"])+1] = {
             "user" : msg.author.name,
             "grabber" : grabber,
@@ -29,8 +28,9 @@ def add_quote(msg: discord.Message, grabber: str, time: datetime) -> None:
             "quote" : msg.content
         }
 
-        print(d)
         json.dump(d, f)
+
+    await msg.channel.send("Succesfully grabbed message!")
 
 # maybe add undo feature
 async def grab(msg: discord.Message, *args, **kwargs) -> None:
@@ -41,7 +41,7 @@ async def grab(msg: discord.Message, *args, **kwargs) -> None:
 
         async for message in msg.channel.history(limit=200): 
             if message.author == user:
-                add_quote(message, msg.author.name, msg.created_at)
+                await add_quote(message, msg.author.name, msg.created_at)
                 return
 
     else:
@@ -49,7 +49,7 @@ async def grab(msg: discord.Message, *args, **kwargs) -> None:
         async for message in msg.channel.history(limit=200):
             if message.author != bot.user and message.author != msg.author:
                 # Rewrite this to use the nicknames of users instead
-                add_quote(message, msg.author.name, msg.created_at)
+                await add_quote(message, msg.author.name, msg.created_at)
                 return
                 
 async def random(msg: discord.Message, *args, **kwargs) -> None:
@@ -60,7 +60,7 @@ async def random(msg: discord.Message, *args, **kwargs) -> None:
         id = str(randint(1,len(d["quotes"])))
         quote = d["quotes"][id]
 
-        await msg.channel.send(f"{quote['user']} said ```{quote['quote']}``` at {quote['datetime']}. Grabbed by {quote['grabber']}")
+        await msg.channel.send(f"{quote['user']} said: ```{quote['quote']}``` at {quote['datetime']}. Grabbed by {quote['grabber']}")
 
 
 async def get(msg: discord.Message, *args, **kwargs) -> List[discord.Message]:
