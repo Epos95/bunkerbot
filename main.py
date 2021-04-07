@@ -71,6 +71,7 @@ async def bait(msg: discord.message, *args, **kwargs) -> None:
     async for message in msg.channel.history(limit=100):
         if message.author != bot.user and message.author != msg.author:
             await msg.channel.send(f"Shame on you, {message.author}!")
+            return
 
 @tasks.loop(minutes=2)
 async def times():
