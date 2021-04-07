@@ -67,6 +67,11 @@ async def get(msg: discord.Message, *args, **kwargs) -> List[discord.Message]:
     # this should check if the content of the message contains any name to check 
     pass
 
+async def bait(msg: discord.message, *args, **kwargs) -> None:
+    async for message in msg.channel.history(limit=100):
+        if message.author != bot.user and message.author != msg.author:
+            await msg.channel.send(f"Shame on you, {message.author}!")
+
 @tasks.loop(minutes=2)
 async def times():
     # check if its midnight on a friday, caturday or sunday
@@ -87,6 +92,7 @@ methods = {
     "!grab" : grab,
     "!get"  : get,
     "!random" : random,
+    "!bait" : bait,
 }
 
 @bot.event
