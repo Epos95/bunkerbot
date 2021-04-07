@@ -28,7 +28,7 @@ async def add_quote(msg: discord.Message, grabber: str, time: datetime) -> None:
             "quote" : msg.content
         }
 
-        json.dump(d, f)
+        json.dump(d, f, indent=4)
 
     await msg.channel.send("Succesfully grabbed message!")
 
