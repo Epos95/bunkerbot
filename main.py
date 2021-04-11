@@ -51,6 +51,7 @@ async def grab(msg: discord.Message, *args, **kwargs) -> None:
                 # Rewrite this to use the nicknames of users instead
                 await add_quote(message, msg.author.name, msg.created_at)
                 return
+
                 
 async def random(msg: discord.Message, *args, **kwargs) -> None:
     # get a random quote from the json
@@ -62,16 +63,21 @@ async def random(msg: discord.Message, *args, **kwargs) -> None:
 
         await msg.channel.send(f"{quote['user']} said: ```{quote['quote']}``` at {quote['datetime']}. Grabbed by {quote['grabber']}")
 
-
-async def get(msg: discord.Message, *args, **kwargs) -> List[discord.Message]:
-    # this should check if the content of the message contains any name to check 
-    pass
-
 async def bait(msg: discord.message, *args, **kwargs) -> None:
     async for message in msg.channel.history(limit=100):
         if message.author != bot.user and message.author != msg.author:
             await msg.channel.send(f"Shame on you, {message.author}!")
             return
+
+async def suggest(msg: discord.message) -> None:
+    # should add suggestions to a text file 
+    splat = msg.content.split(" ")[1:]
+
+    if splat:
+        with open("suggestions.txt", "a") as f:
+            f.write(" ".join(splat) + "\n")
+
+        await msg.channel.send("Thank you for your suggestion!")
 
 @tasks.loop(minutes=2)
 async def times():
@@ -94,6 +100,7 @@ methods = {
     "!get"  : get,
     "!random" : random,
     "!bait" : bait,
+    "!suggest" : suggest
 }
 
 @bot.event
@@ -112,7 +119,6 @@ async def on_message(msg: discord.Message) -> None:
         # test before removing
         return
 
-    # lmao imagine using try/catch
     try: 
         await methods[command](msg)
     except:
