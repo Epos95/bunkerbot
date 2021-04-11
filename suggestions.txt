@@ -1,7 +1,6 @@
-work pls
 we'll need two commands, something like !suggest_me where the bot says "I suggest you to <swim with dolpins>" and !suggest_user where the bot goes "I suggest Anx to <have gay sex with men>"
-!random: rewrite output
 migrate quotes to mysql
 make !quote <user>
 countermeasure for spamming commands in main channels (dont know who this is for)
 !random <nickname> for random quotes of said nickname
+make things nicknam/username agnostic
