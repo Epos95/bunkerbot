@@ -61,8 +61,8 @@ async def random(msg: discord.Message, *args, **kwargs) -> None:
         id = str(randint(1,len(d["quotes"])))
         quote = d["quotes"][id]
 
-        await msg.channel.send(f"{quote['user']} said: ```{quote['quote']}``` at {quote['datetime']}. Grabbed by {quote['grabber']}")
-
+        await msg.channel.send(f"<{quote['user']}> {quote['quote']}")
+ 
 async def bait(msg: discord.message, *args, **kwargs) -> None:
     async for message in msg.channel.history(limit=100):
         if message.author != bot.user and message.author != msg.author:
@@ -78,6 +78,9 @@ async def suggest(msg: discord.message) -> None:
             f.write(" ".join(splat) + "\n")
 
         await msg.channel.send("Thank you for your suggestion!")
+
+async def quote(msg: discord.message) -> None:
+    pass
 
 @tasks.loop(minutes=2)
 async def times():
@@ -97,10 +100,10 @@ async def times():
 
 methods = {
     "!grab" : grab,
-    "!get"  : get,
     "!random" : random,
     "!bait" : bait,
-    "!suggest" : suggest
+    "!suggest" : suggest,
+    "!quote" : quote
 }
 
 @bot.event
