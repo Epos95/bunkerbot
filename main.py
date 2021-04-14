@@ -1,10 +1,10 @@
 import discord
 from discord.ext import tasks
 import json
+import mysql.connector
 
 from random import randint
 from typing import List
-
 import datetime
 
 with open("token.txt", "r") as f:
@@ -35,7 +35,6 @@ async def add_quote(msg: discord.Message, grabber: str, time: datetime) -> None:
 # maybe add undo feature
 async def grab(msg: discord.Message, *args, **kwargs) -> None:
     if len(msg.mentions) == 1:
-        # this does not work
 
         user = msg.mentions[0]
 
