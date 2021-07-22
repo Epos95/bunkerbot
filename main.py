@@ -6,9 +6,14 @@ import mysql.connector
 from random import randint
 from typing import List
 import datetime
+import sys
 
 with open("token.txt", "r") as f:
-    token = f.read()
+    text = f.read().strip("\n")
+    token=text.split(" ")[0]
+    password=text.split(" ")[1]
+
+cursor = mysql.connector.connect(user="root", password=password, host="localhost", database="bunker").cursor(buffered=True)
 
 bot = discord.Client()
 # best structure? fuck if i know just yeet it into a json file 
